@@ -7,11 +7,9 @@ import cats.data._
 import cats.instances.all._
 import cats.laws.discipline.SerializableTests
 import cats.laws.discipline.arbitrary._
-import cats.laws.discipline.eq._
-import cats.mtl.laws.discipline.{ApplicativeLocalTests, FunctorEmptyTests, TraverseEmptyTests}
+import cats.mtl.laws.discipline.{FunctorEmptyTests, TraverseEmptyTests}
 
 class EmptyTests extends BaseSuite {
-  import cats.mtl.instances.all._
 
   checkAll("Option",
     TraverseEmptyTests[Option](mtl.instances.empty.optionTraverseEmpty)

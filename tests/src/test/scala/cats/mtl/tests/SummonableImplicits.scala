@@ -8,7 +8,6 @@ final class SummonableImplicits extends BaseSuite {
   // test instances.all._
   //noinspection ScalaUnusedSymbol
   locally {
-    import cats.data._
     import cats.instances.all._
     import cats.mtl.implicits._
     val ApplicativeAskTest: Unit = {
@@ -55,8 +54,7 @@ final class SummonableImplicits extends BaseSuite {
   // test hierarchy.base
   //noinspection ScalaUnusedSymbol
   locally {
-    import cats.data._
-    import cats.instances.all._
+
     import cats.mtl.implicits._
 
     def localToAsk[F[_]](implicit F: ApplicativeLocal[F, String]): ApplicativeAsk[F, String] = {

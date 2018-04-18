@@ -3,7 +3,7 @@ package mtl
 package tests
 
 import cats.arrow.FunctionK
-import cats.data.{Kleisli, State, StateT}
+import cats.data.{Kleisli, StateT}
 import cats.laws.discipline.SerializableTests
 import cats.mtl.laws.discipline.{ApplicativeAskTests, FunctorTellTests, MonadLayerControlTests, MonadStateTests}
 import cats.laws.discipline.arbitrary._
@@ -18,7 +18,6 @@ import cats.mtl.instances.optiont._
 import cats.mtl.instances.eithert._
 import cats.mtl.hierarchy.base._
 import cats.instances.all._
-import cats.mtl.MonadLayerControl.Aux
 
 class StateTTestsBase extends BaseSuite {
   implicit val arbFunctionK: Arbitrary[Option ~> Option] =
