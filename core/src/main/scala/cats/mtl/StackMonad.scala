@@ -11,6 +11,7 @@ case class ServiceMonad[R <: HList, S <: HList, W, E, T](f:(R, S) => Either[E, (
 
 object ServiceMonads {
 
+
   implicit def serviceMonad[R <: HList, S <: HList, W, E](implicit M:Monoid[W]):Monad[ServiceMonad[R, S, W, E, ?]] =
     new Monad[ServiceMonad[R, S, W, E, ?]] {
 
@@ -49,7 +50,7 @@ object ServiceMonads {
   implicit def stateMonad[R <: HList, S <: HList, W, E, S2]
   (implicit
    S: shapeless.ops.hlist.Selector[S, S2],
-   R: shapeless.ops.hlist.Replacer.Aux[S, S2, S2, S],
+   R: shapeless.ops.hlist.Replacer[S, S2, S2],
    M:Monoid[W]):MonadState[ServiceMonad[R, S, W, E, ?], S2] =
     new MonadState[ServiceMonad[R, S, W, E, ?], S2] {
 
@@ -63,14 +64,14 @@ object ServiceMonads {
         ServiceMonad((r, s) => Right((s, M.empty, S(s))))
 
       def set(s2: S2): ServiceMonad[R, S, W, E, Unit] =
-        ServiceMonad((r, s) => Right((R(s, s2), M.empty, ())))
+        ServiceMonad((r, s) => Right((R(s, s2).asInstanceOf[S], M.empty, ())))
 
     }
 
   implicit def applicativeAsk[R <: HList, S <: HList, W, E, R2]
   (implicit
    S: shapeless.ops.hlist.Selector[R, R2],
-   R: shapeless.ops.hlist.Replacer.Aux[R, R2, R2, R],
+   R: shapeless.ops.hlist.Replacer[R, R2, R2],
    M:Monoid[W]):ApplicativeAsk[ServiceMonad[R, S, W, E, ?], R2] =
     new ApplicativeAsk[ServiceMonad[R, S, W, E, ?], R2]{
 
